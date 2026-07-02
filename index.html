@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تم استلام التفويض</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Tahoma, Arial, sans-serif; background: #232F3E; color: #fff;
+         display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+  .card { background: #fff; color: #1A2430; border-radius: 14px; padding: 40px; max-width: 560px; width: 92%;
+          box-shadow: 0 10px 40px rgba(0,0,0,.35); text-align: center; }
+  h1 { font-size: 26px; margin: 0 0 8px; }
+  .ok { color: #1E8E3E; } .warn { color: #B3261E; }
+  p { color: #5B6B7C; font-size: 16px; line-height: 1.8; }
+  .code-box { background: #F3F5F7; border: 1px solid #D7DFE7; border-radius: 10px; padding: 14px;
+              font-family: monospace; font-size: 13px; word-break: break-all; margin: 18px 0; text-align: left; direction: ltr; }
+  button { background: #FF9900; color: #232F3E; border: 0; border-radius: 10px; padding: 12px 28px;
+           font-size: 16px; font-weight: bold; cursor: pointer; }
+  button:active { transform: scale(.98); }
+  .hint { font-size: 13px; color: #8FA3B8; margin-top: 16px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div id="success" style="display:none">
+    <h1 class="ok">✓ تم التفويض بنجاح</h1>
+    <p>خطوة أخيرة واحدة: اضغط الزر ده وابعت اللي اتنسخ في رسالة واتساب لمدير حسابك.</p>
+    <div class="code-box" id="code"></div>
+    <button onclick="copyCode()">نسخ الكود</button>
+    <p class="hint">⏱ الكود صالح لدقائق قليلة — ابعته فوراً من فضلك.</p>
+  </div>
+  <div id="nocode" style="display:none">
+    <h1 class="warn">لم يصل كود التفويض</h1>
+    <p>الصفحة دي بتستقبل تفويض أمازون. لو وصلتها من غير ما تيجي من صفحة موافقة أمازون فده طبيعي.
+       لو كنت بتحاول توافق وظهرت الرسالة دي، ابعت لقطة شاشة لمدير حسابك.</p>
+  </div>
+</div>
+<script>
+  const p = new URLSearchParams(location.search);
+  const code = p.get("spapi_oauth_code"), sid = p.get("selling_partner_id"), st = p.get("state");
+  if (code) {
+    document.getElementById("success").style.display = "block";
+    document.getElementById("code").textContent =
+      "spapi_oauth_code=" + code + "\nselling_partner_id=" + (sid || "?") + "\nstate=" + (st || "?");
+  } else {
+    document.getElementById("nocode").style.display = "block";
+  }
+  function copyCode() {
+    navigator.clipboard.writeText(document.getElementById("code").textContent)
+      .then(() => alert("اتنسخ ✓ — ابعته دلوقتي"));
+  }
+</script>
+</body>
+</html>
