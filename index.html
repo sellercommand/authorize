@@ -3,51 +3,238 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تم استلام التفويض</title>
+<title>Seller Command Center — تم التفويض بنجاح</title>
 <style>
-  body { font-family: -apple-system, "Segoe UI", Tahoma, Arial, sans-serif; background: #232F3E; color: #fff;
-         display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
-  .card { background: #fff; color: #1A2430; border-radius: 14px; padding: 40px; max-width: 560px; width: 92%;
-          box-shadow: 0 10px 40px rgba(0,0,0,.35); text-align: center; }
-  h1 { font-size: 26px; margin: 0 0 8px; }
-  .ok { color: #1E8E3E; } .warn { color: #B3261E; }
-  p { color: #5B6B7C; font-size: 16px; line-height: 1.8; }
-  .code-box { background: #F3F5F7; border: 1px solid #D7DFE7; border-radius: 10px; padding: 14px;
-              font-family: monospace; font-size: 13px; word-break: break-all; margin: 18px 0; text-align: left; direction: ltr; }
-  button { background: #FF9900; color: #232F3E; border: 0; border-radius: 10px; padding: 12px 28px;
-           font-size: 16px; font-weight: bold; cursor: pointer; }
-  button:active { transform: scale(.98); }
-  .hint { font-size: 13px; color: #8FA3B8; margin-top: 16px; }
+  :root {
+    --navy: #0F1B2B; --navy2: #16263B; --card: #FFFFFF;
+    --ink: #14212F; --muted: #5E7186; --line: #E3EAF2;
+    --amber: #FF9900; --amber-deep: #E8850C;
+    --green: #1E8E3E; --green-soft: #E8F5EC;
+    --red: #B3261E; --red-soft: #FDECEA;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; padding: 24px;
+    color: #fff; background: radial-gradient(1200px 700px at 80% -10%, #24405F 0%, var(--navy2) 45%, var(--navy) 100%);
+  }
+  .glow { position: fixed; border-radius: 50%; filter: blur(90px); opacity: .35; pointer-events: none; }
+  .glow.a { width: 380px; height: 380px; background: #FF990022; top: -80px; left: -80px; }
+  .glow.b { width: 300px; height: 300px; background: #2E7CF622; bottom: -60px; right: -60px; }
+
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+  .brand .logo {
+    width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--amber), var(--amber-deep));
+    font-size: 22px; box-shadow: 0 6px 18px #FF990040;
+  }
+  .brand .name { font-weight: 800; font-size: 18px; letter-spacing: .2px; }
+  .brand .name small { display: block; font-weight: 500; font-size: 11.5px; color: #AEC2D6; }
+
+  .card {
+    background: var(--card); color: var(--ink); border-radius: 20px;
+    padding: 38px 34px 30px; max-width: 620px; width: 100%;
+    box-shadow: 0 24px 70px rgba(0,0,0,.45), 0 2px 0 #FF990055 inset;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+    background: linear-gradient(90deg, var(--amber), #FFC466, var(--amber));
+  }
+
+  .checkwrap { width: 92px; height: 92px; margin: 4px auto 14px; border-radius: 50%;
+    background: var(--green-soft); display: grid; place-items: center; }
+  svg.check { width: 56px; height: 56px; }
+  svg.check circle { fill: none; stroke: var(--green); stroke-width: 2.6;
+    stroke-dasharray: 166; stroke-dashoffset: 166; animation: ring .7s ease-out forwards; }
+  svg.check path { fill: none; stroke: var(--green); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 48; stroke-dashoffset: 48; animation: tick .45s .55s ease-out forwards; }
+  @keyframes ring { to { stroke-dashoffset: 0; } }
+  @keyframes tick { to { stroke-dashoffset: 0; } }
+
+  h1 { font-size: 26px; margin-bottom: 6px; }
+  h1.ok { color: var(--green); }
+  h1.warn { color: var(--red); }
+  .sub { color: var(--muted); font-size: 15.5px; line-height: 1.9; max-width: 480px; margin: 0 auto; }
+
+  .steps { display: flex; gap: 8px; justify-content: center; margin: 18px 0 4px; flex-wrap: wrap; }
+  .step { background: #F4F7FA; border: 1px solid var(--line); color: var(--ink);
+    border-radius: 999px; padding: 7px 14px; font-size: 13px; font-weight: 600; }
+  .step b { color: var(--amber-deep); }
+
+  .code-box {
+    background: #F7F9FB; border: 1.5px dashed #C9D6E2; border-radius: 14px;
+    padding: 16px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px;
+    word-break: break-all; margin: 16px 0 6px; text-align: left; direction: ltr; color: #24425F;
+  }
+  .validity { font-size: 12.5px; color: var(--amber-deep); font-weight: 700; margin-bottom: 16px; }
+
+  .btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  button, .btn {
+    border: 0; border-radius: 12px; padding: 13px 26px; font-size: 15.5px; font-weight: 800;
+    cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: transform .06s ease, box-shadow .2s ease;
+  }
+  button:active, .btn:active { transform: scale(.97); }
+  .btn-wa { background: #25D366; color: #fff; box-shadow: 0 8px 20px #25D36640; }
+  .btn-copy { background: linear-gradient(135deg, var(--amber), var(--amber-deep)); color: #1A2430; box-shadow: 0 8px 20px #FF990040; }
+
+  .trust {
+    margin-top: 22px; padding: 14px 16px; border-radius: 12px; background: #F4F9F5;
+    border: 1px solid #D8ECDD; display: flex; gap: 10px; align-items: flex-start; text-align: start;
+  }
+  .trust .ic { font-size: 18px; line-height: 1.4; }
+  .trust p { font-size: 13px; color: #2F5B3C; line-height: 1.8; }
+
+  .foot { margin-top: 18px; color: #8FA6BC; font-size: 12px; }
+  .foot a { color: #C9DBEC; }
+
+  .lang {
+    position: fixed; top: 18px; inset-inline-end: 18px; z-index: 5;
+    background: #FFFFFF14; border: 1px solid #FFFFFF2E; color: #E7F0F9;
+    border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 700; cursor: pointer;
+    backdrop-filter: blur(6px);
+  }
+  .lang:hover { background: #FFFFFF22; }
+  .hidden { display: none !important; }
+  @media (max-width: 480px) { .card { padding: 28px 20px 24px; } h1 { font-size: 22px; } }
 </style>
 </head>
 <body>
-<div class="card">
-  <div id="success" style="display:none">
-    <h1 class="ok">✓ تم التفويض بنجاح</h1>
-    <p>خطوة أخيرة واحدة: اضغط الزر ده وابعت اللي اتنسخ في رسالة واتساب لمدير حسابك.</p>
-    <div class="code-box" id="code"></div>
-    <button onclick="copyCode()">نسخ الكود</button>
-    <p class="hint">⏱ الكود صالح لدقائق قليلة — ابعته فوراً من فضلك.</p>
-  </div>
-  <div id="nocode" style="display:none">
-    <h1 class="warn">لم يصل كود التفويض</h1>
-    <p>الصفحة دي بتستقبل تفويض أمازون. لو وصلتها من غير ما تيجي من صفحة موافقة أمازون فده طبيعي.
-       لو كنت بتحاول توافق وظهرت الرسالة دي، ابعت لقطة شاشة لمدير حسابك.</p>
+<div class="glow a"></div><div class="glow b"></div>
+<button class="lang" id="langBtn" onclick="toggleLang()">English</button>
+
+<div class="brand">
+  <div class="logo">🛰️</div>
+  <div class="name">Seller Command Center
+    <small id="brandTag">إدارة ذكية لحسابات أمازون مصر</small>
   </div>
 </div>
+
+<div class="card">
+
+  <!-- ✓ نجاح -->
+  <div id="success" class="hidden">
+    <div class="checkwrap">
+      <svg class="check" viewBox="0 0 56 56">
+        <circle cx="28" cy="28" r="26.5"/>
+        <path d="M16 29.5 L24.5 38 L40 20"/>
+      </svg>
+    </div>
+
+    <div data-l="ar">
+      <h1 class="ok">تم التفويض بنجاح</h1>
+      <p class="sub">أهلاً بيك 👋 حسابك اتوصّل بأمان. فاضلة خطوة واحدة صغيرة وخلصنا:</p>
+      <div class="steps">
+        <span class="step"><b>1</b> اضغط زر واتساب</span>
+        <span class="step"><b>2</b> ابعت الرسالة زي ما هي</span>
+        <span class="step"><b>3</b> استلم تقريرك 🎁</span>
+      </div>
+    </div>
+    <div data-l="en" class="hidden">
+      <h1 class="ok">Authorization Successful</h1>
+      <p class="sub">Welcome 👋 Your account is securely connected. Just one small step left:</p>
+      <div class="steps">
+        <span class="step"><b>1</b> Tap the WhatsApp button</span>
+        <span class="step"><b>2</b> Send the message as is</span>
+        <span class="step"><b>3</b> Receive your report 🎁</span>
+      </div>
+    </div>
+
+    <div class="code-box" id="code"></div>
+    <div class="validity">
+      <span data-l="ar">⏱ الكود صالح لدقائق قليلة — ابعته دلوقتي من فضلك</span>
+      <span data-l="en" class="hidden">⏱ This code is valid for a few minutes — please send it now</span>
+    </div>
+
+    <div class="btns">
+      <a class="btn btn-wa" id="waBtn" target="_blank" rel="noopener">
+        <span data-l="ar">إرسال عبر واتساب 💬</span>
+        <span data-l="en" class="hidden">Send via WhatsApp 💬</span>
+      </a>
+      <button class="btn-copy" onclick="copyCode()">
+        <span data-l="ar" id="copyLabelAr">نسخ الكود</span>
+        <span data-l="en" class="hidden" id="copyLabelEn">Copy code</span>
+      </button>
+    </div>
+
+    <div class="trust">
+      <div class="ic">🔒</div>
+      <p>
+        <span data-l="ar">تفويضك <b>للقراءة على التقارير فقط</b> — لا يمكن لأي طرف تغيير أسعارك أو بياناتك، وتقدر تلغي التفويض في أي وقت من صفحة <b>Manage Your Apps</b> في Seller Central. بياناتك في أمان تام.</span>
+        <span data-l="en" class="hidden">Your authorization is <b>read-only access to reports</b> — no one can change your prices or data, and you can revoke it anytime from <b>Manage Your Apps</b> in Seller Central. Your data is completely safe.</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- ✕ مفيش كود -->
+  <div id="nocode" class="hidden">
+    <div data-l="ar">
+      <h1 class="warn">لم يصل كود التفويض</h1>
+      <p class="sub">الصفحة دي بتستقبل تفويض أمازون تلقائياً. لو وصلتها من غير ما تعدّي على صفحة موافقة أمازون فده طبيعي تماماً.<br>
+      لو كنت بتحاول تفوّض وظهرتلك الرسالة دي — ابعت لقطة شاشة على واتساب وهنحلها معاك فوراً.</p>
+    </div>
+    <div data-l="en" class="hidden">
+      <h1 class="warn">No authorization code received</h1>
+      <p class="sub">This page receives Amazon's authorization automatically. If you arrived here without going through Amazon's consent page, that's perfectly normal.<br>
+      If you were trying to authorize and see this — send us a screenshot on WhatsApp and we'll fix it right away.</p>
+    </div>
+    <div class="btns" style="margin-top:18px">
+      <a class="btn btn-wa" id="waHelpBtn" target="_blank" rel="noopener">
+        <span data-l="ar">تواصل عبر واتساب</span>
+        <span data-l="en" class="hidden">Contact via WhatsApp</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div class="foot">
+  Seller Command Center ·
+  <a href="https://sellercommand.github.io/" target="_blank" rel="noopener">sellercommand.github.io</a>
+</div>
+
 <script>
-  const p = new URLSearchParams(location.search);
-  const code = p.get("spapi_oauth_code"), sid = p.get("selling_partner_id"), st = p.get("state");
+  var WA_NUMBER = "201027000813"; // رقم واتساب الخدمة
+
+  var p = new URLSearchParams(location.search);
+  var code = p.get("spapi_oauth_code"), sid = p.get("selling_partner_id"), st = p.get("state");
+  var payload = "";
+
   if (code) {
-    document.getElementById("success").style.display = "block";
-    document.getElementById("code").textContent =
-      "spapi_oauth_code=" + code + "\nselling_partner_id=" + (sid || "?") + "\nstate=" + (st || "?");
+    payload = "spapi_oauth_code=" + code + "\nselling_partner_id=" + (sid || "?") + "\nstate=" + (st || "?");
+    document.getElementById("success").classList.remove("hidden");
+    document.getElementById("code").textContent = payload;
+    var waText = encodeURIComponent("تم التفويض ✅ ده كود الربط:\n" + payload);
+    document.getElementById("waBtn").href = "https://wa.me/" + WA_NUMBER + "?text=" + waText;
   } else {
-    document.getElementById("nocode").style.display = "block";
+    document.getElementById("nocode").classList.remove("hidden");
+    document.getElementById("waHelpBtn").href = "https://wa.me/" + WA_NUMBER;
   }
+
   function copyCode() {
-    navigator.clipboard.writeText(document.getElementById("code").textContent)
-      .then(() => alert("اتنسخ ✓ — ابعته دلوقتي"));
+    navigator.clipboard.writeText(payload).then(function () {
+      document.getElementById("copyLabelAr").textContent = "اتنسخ ✓";
+      document.getElementById("copyLabelEn").textContent = "Copied ✓";
+      setTimeout(function () {
+        document.getElementById("copyLabelAr").textContent = "نسخ الكود";
+        document.getElementById("copyLabelEn").textContent = "Copy code";
+      }, 2500);
+    });
+  }
+
+  var lang = "ar";
+  function toggleLang() {
+    lang = (lang === "ar") ? "en" : "ar";
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === "ar") ? "rtl" : "ltr";
+    document.getElementById("langBtn").textContent = (lang === "ar") ? "English" : "عربي";
+    document.getElementById("brandTag").textContent = (lang === "ar")
+      ? "إدارة ذكية لحسابات أمازون مصر" : "Smart Amazon Egypt account management";
+    document.querySelectorAll("[data-l]").forEach(function (el) {
+      el.classList.toggle("hidden", el.getAttribute("data-l") !== lang);
+    });
   }
 </script>
 </body>
