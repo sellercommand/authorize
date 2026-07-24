@@ -6,104 +6,107 @@
 <title>Seller Command Center — تم التفويض بنجاح</title>
 <style>
   :root {
-    --navy: #0F1B2B; --navy2: #16263B; --card: #FFFFFF;
-    --ink: #14212F; --muted: #5E7186; --line: #E3EAF2;
-    --amber: #FF9900; --amber-deep: #E8850C;
-    --green: #1E8E3E; --green-soft: #E8F5EC;
-    --red: #B3261E; --red-soft: #FDECEA;
+    --green:#0B7A3B; --green-2:#0E9550; --green-tint:#F1F8F3; --green-line:#DCEBE1;
+    --ink:#0D1B2A; --muted:#5C7080; --line:#E4EAF0;
+    --amber:#E8850C; --page:#F4F6F8;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing:border-box; margin:0; padding:0; }
   body {
-    font-family: -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
-    min-height: 100vh; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; padding: 24px;
-    color: #fff; background: radial-gradient(1200px 700px at 80% -10%, #24405F 0%, var(--navy2) 45%, var(--navy) 100%);
+    font-family:-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;
+    background:var(--page); color:var(--ink);
+    min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:28px 20px;
   }
-  .glow { position: fixed; border-radius: 50%; filter: blur(90px); opacity: .35; pointer-events: none; }
-  .glow.a { width: 380px; height: 380px; background: #FF990022; top: -80px; left: -80px; }
-  .glow.b { width: 300px; height: 300px; background: #2E7CF622; bottom: -60px; right: -60px; }
 
-  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+  .brand { display:flex; align-items:center; gap:10px; margin-bottom:20px; }
   .brand .logo {
-    width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
-    background: #232F3E; border: 1px solid #3A4A5E;
-    box-shadow: 0 6px 18px #00000050;
+    width:40px; height:40px; border-radius:11px; display:grid; place-items:center;
+    background:#232F3E; box-shadow:0 4px 14px #232F3E35;
   }
-  .brand .logo svg { width: 30px; height: 30px; }
-  .brand .name { font-weight: 800; font-size: 18px; letter-spacing: .2px; }
-  .brand .name small { display: block; font-weight: 500; font-size: 11.5px; color: #AEC2D6; }
+  .brand .logo svg { width:28px; height:28px; }
+  .brand .name { font-weight:800; font-size:17px; }
+  .brand .name small { display:block; font-weight:500; font-size:11.5px; color:var(--muted); }
 
-  .card {
-    background: var(--card); color: var(--ink); border-radius: 20px;
-    padding: 38px 34px 30px; max-width: 620px; width: 100%;
-    box-shadow: 0 24px 70px rgba(0,0,0,.45), 0 2px 0 #FF990055 inset;
-    text-align: center; position: relative; overflow: hidden;
-  }
-  .card::before {
-    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px;
-    background: linear-gradient(90deg, var(--amber), #FFC466, var(--amber));
+  .shell {
+    width:100%; max-width:980px; background:#fff; border:1px solid var(--line);
+    border-radius:20px; overflow:hidden; box-shadow:0 18px 50px rgba(13,27,42,.10);
+    display:grid; grid-template-columns:330px 1fr;
   }
 
-  .checkwrap { width: 92px; height: 92px; margin: 4px auto 14px; border-radius: 50%;
-    background: var(--green-soft); display: grid; place-items: center; }
-  svg.check { width: 56px; height: 56px; }
-  svg.check circle { fill: none; stroke: var(--green); stroke-width: 2.6;
-    stroke-dasharray: 166; stroke-dashoffset: 166; animation: ring .7s ease-out forwards; }
-  svg.check path { fill: none; stroke: var(--green); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round;
-    stroke-dasharray: 48; stroke-dashoffset: 48; animation: tick .45s .55s ease-out forwards; }
-  @keyframes ring { to { stroke-dashoffset: 0; } }
-  @keyframes tick { to { stroke-dashoffset: 0; } }
+  /* ــــ اللوحة اليسرى ــــ */
+  .side {
+    background:var(--green-tint); border-inline-end:1px solid var(--green-line);
+    padding:40px 30px; display:flex; flex-direction:column; align-items:center; text-align:center;
+  }
+  .checkwrap { width:96px; height:96px; border-radius:50%; background:#E4F3E9; display:grid; place-items:center; margin-bottom:18px; }
+  svg.check { width:56px; height:56px; }
+  svg.check circle { fill:none; stroke:var(--green); stroke-width:2.4; stroke-dasharray:166; stroke-dashoffset:166; animation:ring .7s ease-out forwards; }
+  svg.check path { fill:none; stroke:var(--green); stroke-width:5; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:48; stroke-dashoffset:48; animation:tick .45s .55s ease-out forwards; }
+  @keyframes ring { to { stroke-dashoffset:0; } }
+  @keyframes tick { to { stroke-dashoffset:0; } }
 
-  h1 { font-size: 26px; margin-bottom: 6px; }
-  h1.ok { color: var(--green); }
-  h1.warn { color: var(--red); }
-  .sub { color: var(--muted); font-size: 15.5px; line-height: 1.9; max-width: 480px; margin: 0 auto; }
+  .side h2 { font-size:25px; line-height:1.35; margin-bottom:8px; color:#0A2C18; }
+  .side p.lead { color:#4B6B57; font-size:14px; margin-bottom:26px; }
 
-  .steps { display: flex; gap: 8px; justify-content: center; margin: 18px 0 4px; flex-wrap: wrap; }
-  .step { background: #F4F7FA; border: 1px solid var(--line); color: var(--ink);
-    border-radius: 999px; padding: 7px 14px; font-size: 13px; font-weight: 600; }
-  .step b { color: var(--amber-deep); }
+  .steps { width:100%; display:flex; flex-direction:column; gap:0; }
+  .stp { display:flex; align-items:center; gap:12px; text-align:start; }
+  .stp .num {
+    width:30px; height:30px; border-radius:50%; background:var(--green); color:#fff;
+    display:grid; place-items:center; font-size:13.5px; font-weight:800; flex:none;
+  }
+  .stp .lbl { font-size:14.5px; color:#123A24; font-weight:600; }
+  .rail { width:2px; height:22px; background:#BFDDCA; margin-inline-start:14px; }
 
+  .side .divider { width:100%; height:1px; background:var(--green-line); margin:26px 0 16px; }
+  .side .lock { display:flex; align-items:center; gap:8px; font-size:12.5px; color:#3F6650; }
+
+  /* ــــ اللوحة اليمنى ــــ */
+  .main { padding:44px 42px; }
+  .badge {
+    display:inline-block; background:#E9F6ED; color:var(--green); font-size:11.5px; font-weight:800;
+    letter-spacing:.8px; padding:7px 13px; border-radius:7px; margin-bottom:18px;
+  }
+  .main h1 { font-size:33px; line-height:1.25; margin-bottom:10px; }
+  .main p.sub { color:var(--muted); font-size:15px; line-height:1.8; margin-bottom:26px; }
+
+  .field-label { font-size:13.5px; font-weight:800; margin-bottom:9px; display:block; }
   .code-box {
-    background: #F7F9FB; border: 1.5px dashed #C9D6E2; border-radius: 14px;
-    padding: 16px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px;
-    word-break: break-all; margin: 16px 0 6px; text-align: left; direction: ltr; color: #24425F;
+    border:1px solid var(--line); border-radius:12px; background:#FBFCFD; padding:18px 16px;
+    font-family:ui-monospace,Menlo,Consolas,monospace; font-size:13.5px; line-height:2;
+    color:#1B3550; direction:ltr; text-align:left; word-break:break-all;
   }
-  .validity { font-size: 12.5px; color: var(--amber-deep); font-weight: 700; margin-bottom: 16px; }
+  .expiry { display:flex; align-items:center; gap:7px; color:var(--amber); font-size:13.5px; font-weight:700; margin:14px 0 22px; }
 
-  .btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  button, .btn {
-    border: 0; border-radius: 12px; padding: 13px 26px; font-size: 15.5px; font-weight: 800;
-    cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
-    transition: transform .06s ease, box-shadow .2s ease;
+  .btn {
+    width:100%; border:0; border-radius:12px; padding:16px; font-size:16px; font-weight:800;
+    cursor:pointer; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:10px;
+    transition:transform .06s ease, box-shadow .2s ease, background .2s ease;
   }
-  button:active, .btn:active { transform: scale(.97); }
-  .btn-wa { background: #25D366; color: #fff; box-shadow: 0 8px 20px #25D36640; }
-  .btn-copy { background: linear-gradient(135deg, var(--amber), var(--amber-deep)); color: #1A2430; box-shadow: 0 8px 20px #FF990040; }
-
-  .trust {
-    margin-top: 22px; padding: 14px 16px; border-radius: 12px; background: #F4F9F5;
-    border: 1px solid #D8ECDD; display: flex; gap: 10px; align-items: flex-start; text-align: start;
-  }
-  .trust .ic { font-size: 18px; line-height: 1.4; }
-  .trust p { font-size: 13px; color: #2F5B3C; line-height: 1.8; }
-
-  .foot { margin-top: 18px; color: #8FA6BC; font-size: 12px; }
-  .foot a { color: #C9DBEC; }
+  .btn:active { transform:scale(.99); }
+  .btn-primary { background:var(--green); color:#fff; box-shadow:0 8px 22px #0B7A3B33; }
+  .btn-primary:hover { background:var(--green-2); }
+  .btn-ghost { background:#fff; color:var(--green); border:1.6px solid var(--green); margin-top:11px; }
+  .btn-ghost:hover { background:var(--green-tint); }
 
   .lang {
-    position: fixed; top: 18px; inset-inline-end: 18px; z-index: 5;
-    background: #FFFFFF14; border: 1px solid #FFFFFF2E; color: #E7F0F9;
-    border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 700; cursor: pointer;
-    backdrop-filter: blur(6px);
+    position:fixed; top:18px; inset-inline-end:18px; z-index:5;
+    background:#fff; border:1px solid var(--line); color:var(--ink);
+    border-radius:999px; padding:8px 17px; font-size:13px; font-weight:700; cursor:pointer;
+    box-shadow:0 3px 12px rgba(13,27,42,.08);
   }
-  .lang:hover { background: #FFFFFF22; }
-  .hidden { display: none !important; }
-  @media (max-width: 480px) { .card { padding: 28px 20px 24px; } h1 { font-size: 22px; } }
+  .foot { margin-top:18px; color:#8298AB; font-size:12px; }
+  .foot a { color:#5C7080; }
+  .hidden { display:none !important; }
+
+  @media (max-width:820px) {
+    .shell { grid-template-columns:1fr; }
+    .side { border-inline-end:0; border-bottom:1px solid var(--green-line); padding:34px 24px; }
+    .main { padding:32px 24px; }
+    .main h1 { font-size:27px; }
+  }
 </style>
 </head>
 <body>
-<div class="glow a"></div><div class="glow b"></div>
 <button class="lang" id="langBtn" onclick="toggleLang()">English</button>
 
 <div class="brand">
@@ -120,10 +123,9 @@
   </div>
 </div>
 
-<div class="card">
-
-  <!-- ✓ نجاح -->
-  <div id="success" class="hidden">
+<!-- ✓ نجاح -->
+<div class="shell" id="success" style="display:none">
+  <div class="side">
     <div class="checkwrap">
       <svg class="check" viewBox="0 0 56 56">
         <circle cx="28" cy="28" r="26.5"/>
@@ -131,103 +133,99 @@
       </svg>
     </div>
 
-    <div data-l="ar">
-      <h1 class="ok">تم التفويض بنجاح</h1>
-      <p class="sub">أهلاً بيك 👋 حسابك اتوصّل بأمان. فاضلة خطوة واحدة صغيرة وخلصنا:</p>
-      <div class="steps">
-        <span class="step"><b>1</b> اضغط زر واتساب</span>
-        <span class="step"><b>2</b> ابعت الرسالة زي ما هي</span>
-        <span class="step"><b>3</b> استلم تقريرك 🎁</span>
-      </div>
-    </div>
-    <div data-l="en" class="hidden">
-      <h1 class="ok">Authorization Successful</h1>
-      <p class="sub">Welcome 👋 Your account is securely connected. Just one small step left:</p>
-      <div class="steps">
-        <span class="step"><b>1</b> Tap the WhatsApp button</span>
-        <span class="step"><b>2</b> Send the message as is</span>
-        <span class="step"><b>3</b> Receive your report 🎁</span>
-      </div>
+    <h2><span data-l="ar">تم التفويض بنجاح</span><span data-l="en" class="hidden">Authorization successful</span></h2>
+    <p class="lead">
+      <span data-l="ar">حسابك اتوصّل بأمان.</span>
+      <span data-l="en" class="hidden">Your account is connected safely.</span>
+    </p>
+
+    <div class="steps">
+      <div class="stp"><div class="num">1</div><div class="lbl"><span data-l="ar">افتح واتساب</span><span data-l="en" class="hidden">Open WhatsApp</span></div></div>
+      <div class="rail"></div>
+      <div class="stp"><div class="num">2</div><div class="lbl"><span data-l="ar">ابعت الرسالة</span><span data-l="en" class="hidden">Send the message</span></div></div>
+      <div class="rail"></div>
+      <div class="stp"><div class="num">3</div><div class="lbl"><span data-l="ar">استلم تقريرك</span><span data-l="en" class="hidden">Receive your report</span></div></div>
     </div>
 
+    <div class="divider"></div>
+    <div class="lock">🔒
+      <span data-l="ar">وصول للقراءة فقط · تقدر تلغيه في أي وقت</span>
+      <span data-l="en" class="hidden">Read-only access · Revoke anytime</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <span class="badge"><span data-l="ar">الخطوة الأخيرة</span><span data-l="en" class="hidden">FINAL STEP</span></span>
+    <h1><span data-l="ar">ابعت كود الربط</span><span data-l="en" class="hidden">Send your secure code</span></h1>
+    <p class="sub">
+      <span data-l="ar">ابعت الكود ده على رقم واتساب الرسمي بتاعنا عشان نكمّل الإعداد ونجهّز تقريرك.</span>
+      <span data-l="en" class="hidden">Send this code to our official WhatsApp number to complete the setup.</span>
+    </p>
+
+    <label class="field-label">
+      <span data-l="ar">كود الربط</span><span data-l="en" class="hidden">Access code</span>
+    </label>
     <div class="code-box" id="code"></div>
-    <div class="validity">
-      <span data-l="ar">⏱ الكود صالح لدقائق قليلة — ابعته دلوقتي من فضلك</span>
-      <span data-l="en" class="hidden">⏱ This code is valid for a few minutes — please send it now</span>
+
+    <div class="expiry">🕐
+      <span data-l="ar">الكود صالح لدقائق قليلة</span>
+      <span data-l="en" class="hidden">This code expires in a few minutes</span>
     </div>
 
-    <div class="btns">
-      <a class="btn btn-wa" id="waBtn" target="_blank" rel="noopener">
-        <span data-l="ar">إرسال عبر واتساب 💬</span>
-        <span data-l="en" class="hidden">Send via WhatsApp 💬</span>
-      </a>
-      <button class="btn-copy" onclick="copyCode()">
-        <span data-l="ar" id="copyLabelAr">نسخ الكود</span>
-        <span data-l="en" class="hidden" id="copyLabelEn">Copy code</span>
-      </button>
-    </div>
-
-    <div class="trust">
-      <div class="ic">🔒</div>
-      <p>
-        <span data-l="ar">تفويضك <b>للقراءة على التقارير فقط</b> — لا يمكن لأي طرف تغيير أسعارك أو بياناتك، وتقدر تلغي التفويض في أي وقت من صفحة <b>Manage Your Apps</b> في Seller Central. بياناتك في أمان تام.</span>
-        <span data-l="en" class="hidden">Your authorization is <b>read-only access to reports</b> — no one can change your prices or data, and you can revoke it anytime from <b>Manage Your Apps</b> in Seller Central. Your data is completely safe.</span>
-      </p>
-    </div>
+    <a class="btn btn-primary" id="waBtn" target="_blank" rel="noopener">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.67c2.2 0 4.28.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.82c0 4.54-3.7 8.24-8.25 8.24a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24m4.52 9.72c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.54.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.09-.16.04-.31-.02-.43-.06-.13-.56-1.35-.77-1.84-.2-.48-.4-.42-.55-.43h-.47c-.16 0-.43.06-.65.31-.22.25-.85.83-.85 2.03s.87 2.35.99 2.51c.12.16 1.71 2.61 4.14 3.66.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.11-.22-.17-.47-.29"/></svg>
+      <span data-l="ar">إكمال عبر واتساب</span><span data-l="en" class="hidden">Continue in WhatsApp</span>
+    </a>
+    <button class="btn btn-ghost" onclick="copyCode()">
+      <span data-l="ar" id="copyAr">نسخ الكود</span><span data-l="en" class="hidden" id="copyEn">Copy code</span>
+    </button>
   </div>
+</div>
 
-  <!-- ✕ مفيش كود -->
-  <div id="nocode" class="hidden">
-    <div data-l="ar">
-      <h1 class="warn">لم يصل كود التفويض</h1>
-      <p class="sub">الصفحة دي بتستقبل تفويض أمازون تلقائياً. لو وصلتها من غير ما تعدّي على صفحة موافقة أمازون فده طبيعي تماماً.<br>
-      لو كنت بتحاول تفوّض وظهرتلك الرسالة دي — ابعت لقطة شاشة على واتساب وهنحلها معاك فوراً.</p>
-    </div>
-    <div data-l="en" class="hidden">
-      <h1 class="warn">No authorization code received</h1>
-      <p class="sub">This page receives Amazon's authorization automatically. If you arrived here without going through Amazon's consent page, that's perfectly normal.<br>
-      If you were trying to authorize and see this — send us a screenshot on WhatsApp and we'll fix it right away.</p>
-    </div>
-    <div class="btns" style="margin-top:18px">
-      <a class="btn btn-wa" id="waHelpBtn" target="_blank" rel="noopener">
-        <span data-l="ar">تواصل عبر واتساب</span>
-        <span data-l="en" class="hidden">Contact via WhatsApp</span>
-      </a>
-    </div>
+<!-- ✕ مفيش كود -->
+<div class="shell" id="nocode" style="display:none; grid-template-columns:1fr; max-width:620px;">
+  <div class="main" style="text-align:center">
+    <h1 style="font-size:26px; color:#B3261E">
+      <span data-l="ar">لم يصل كود التفويض</span><span data-l="en" class="hidden">No authorization code received</span>
+    </h1>
+    <p class="sub" style="margin-top:10px">
+      <span data-l="ar">الصفحة دي بتستقبل تفويض أمازون تلقائياً. لو وصلتها من غير ما تعدّي على صفحة موافقة أمازون فده طبيعي تماماً. لو كنت بتحاول تفوّض وظهرتلك الرسالة دي — ابعتلنا لقطة شاشة وهنحلها معاك فوراً.</span>
+      <span data-l="en" class="hidden">This page receives Amazon's authorization automatically. If you arrived here without going through Amazon's consent page, that's perfectly normal. If you were trying to authorize and see this — send us a screenshot and we'll fix it right away.</span>
+    </p>
+    <a class="btn btn-primary" id="waHelpBtn" target="_blank" rel="noopener">
+      <span data-l="ar">تواصل عبر واتساب</span><span data-l="en" class="hidden">Contact via WhatsApp</span>
+    </a>
   </div>
-
 </div>
 
 <div class="foot">
-  Seller Command Center ·
-  <a href="https://sellercommand.github.io/" target="_blank" rel="noopener">sellercommand.github.io</a>
+  Seller Command Center · <a href="https://sellercommand.github.io/" target="_blank" rel="noopener">sellercommand.github.io</a>
 </div>
 
 <script>
-  var WA_NUMBER = "201027000813"; // رقم واتساب الخدمة
-
+  var WA_NUMBER = "201027000813";
   var p = new URLSearchParams(location.search);
   var code = p.get("spapi_oauth_code"), sid = p.get("selling_partner_id"), st = p.get("state");
   var payload = "";
 
   if (code) {
     payload = "spapi_oauth_code=" + code + "\nselling_partner_id=" + (sid || "?") + "\nstate=" + (st || "?");
-    document.getElementById("success").classList.remove("hidden");
+    document.getElementById("success").style.display = "grid";
     document.getElementById("code").textContent = payload;
-    var waText = encodeURIComponent("تم التفويض بنجاح — ده كود الربط:\n" + payload);
-    document.getElementById("waBtn").href = "https://wa.me/" + WA_NUMBER + "?text=" + waText;
+    document.getElementById("waBtn").href =
+      "https://wa.me/" + WA_NUMBER + "?text=" + encodeURIComponent("تم التفويض بنجاح — ده كود الربط:\n" + payload);
   } else {
-    document.getElementById("nocode").classList.remove("hidden");
+    document.getElementById("nocode").style.display = "grid";
     document.getElementById("waHelpBtn").href = "https://wa.me/" + WA_NUMBER;
   }
 
   function copyCode() {
     navigator.clipboard.writeText(payload).then(function () {
-      document.getElementById("copyLabelAr").textContent = "اتنسخ ✓";
-      document.getElementById("copyLabelEn").textContent = "Copied ✓";
+      document.getElementById("copyAr").textContent = "اتنسخ ✓";
+      document.getElementById("copyEn").textContent = "Copied ✓";
       setTimeout(function () {
-        document.getElementById("copyLabelAr").textContent = "نسخ الكود";
-        document.getElementById("copyLabelEn").textContent = "Copy code";
+        document.getElementById("copyAr").textContent = "نسخ الكود";
+        document.getElementById("copyEn").textContent = "Copy code";
       }, 2500);
     });
   }
