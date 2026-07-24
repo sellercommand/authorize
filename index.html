@@ -206,7 +206,7 @@
     payload = "spapi_oauth_code=" + code + "\nselling_partner_id=" + (sid || "?") + "\nstate=" + (st || "?");
     document.getElementById("success").classList.remove("hidden");
     document.getElementById("code").textContent = payload;
-    var waText = encodeURIComponent("تم التفويض ✅ ده كود الربط:\n" + payload);
+    var waText = encodeURIComponent("تم التفويض بنجاح — ده كود الربط:\n" + payload);
     document.getElementById("waBtn").href = "https://wa.me/" + WA_NUMBER + "?text=" + waText;
   } else {
     document.getElementById("nocode").classList.remove("hidden");
