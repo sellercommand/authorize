@@ -88,6 +88,13 @@
   .btn-ghost { background:#fff; color:var(--green); border:1.6px solid var(--green); margin-top:11px; }
   .btn-ghost:hover { background:var(--green-tint); }
 
+  .pledge {
+    margin-top:22px; padding:15px 16px; border-radius:11px;
+    background:#FBFCFD; border:1px solid var(--line);
+    font-size:12.8px; line-height:1.95; color:#44586A;
+  }
+  .pledge b { color:var(--ink); }
+
   .lang {
     position:fixed; top:18px; inset-inline-end:18px; z-index:5;
     background:#fff; border:1px solid var(--line); color:var(--ink);
@@ -149,8 +156,8 @@
 
     <div class="divider"></div>
     <div class="lock">🔒
-      <span data-l="ar">وصول للقراءة فقط · تقدر تلغيه في أي وقت</span>
-      <span data-l="en" class="hidden">Read-only access · Revoke anytime</span>
+      <span data-l="ar">إحنا بنقرأ التقارير ونحلّلها · وتقدر تلغي التفويض في أي وقت</span>
+      <span data-l="en" class="hidden">We read and analyse your reports · Revoke anytime</span>
     </div>
   </div>
 
@@ -179,6 +186,12 @@
     <button class="btn btn-ghost" onclick="copyCode()">
       <span data-l="ar" id="copyAr">نسخ الكود</span><span data-l="en" class="hidden" id="copyEn">Copy code</span>
     </button>
+
+    <div class="pledge">
+      <b><span data-l="ar">شفنا تنبيه أمازون؟ آه — وده توضيحه:</span><span data-l="en" class="hidden">About Amazon's notice:</span></b>
+      <span data-l="ar">أمازون بتعرض نفس التنبيه العام لكل التطبيقات، بيقول إن التطبيق «يقدر» يشوف أو يعدّل. ده وصف تقني عام مش وصف لشغلنا. <b>تعهّدنا المكتوب: مابننفّذش أي تغيير على حسابك — سعر أو لستنج أو مخزون — إلا بموافقتك الصريحة الموثّقة على كل تغيير.</b> وشغلنا الأساسي قراءة تقاريرك وتحليلها، وتقدر تسحب التفويض في أي لحظة من صفحة Manage Your Apps.</span>
+      <span data-l="en" class="hidden">Amazon shows the same generic notice for every application, stating an app "can" view or edit. That's a generic technical description, not a description of what we do. <b>Our written pledge: we never make any change to your account — price, listing, or inventory — without your explicit, documented approval for each change.</b> Our core work is reading and analysing your reports, and you can revoke access anytime from Manage Your Apps.</span>
+    </div>
   </div>
 </div>
 
